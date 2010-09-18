@@ -8,7 +8,7 @@ env.Append(LIBPATH=['.'])
 
 cutest = env.Object('cutest/CuTest.c')
 
-hashlib = env.Library('hash',['ilhash/'+ f for f in ['ILHash.c']])
+hashlib = env.Library('hash',['ilhash/'+ f for f in ['ILHash.c','ILSort.c']])
 
 hash_test_files = Glob('ilhash/*Test.c')
 if(len(hash_test_files) > 0):
@@ -16,6 +16,7 @@ if(len(hash_test_files) > 0):
 	env.GenerateAllTests(hash_test_suite,hash_test_files)
 	hash_tests = env.Program(hash_test_suite + hash_test_files + cutest,LIBS=['hash'])
 	run_hash_tests = Command('hashtest',hash_tests, './$SOURCE')
+	Default(run_hash_tests)
 
 classes = ['Board.c','PlayerHuman.c','PlayerMinMax.c']
 target = env.Program("main",['main.c'] + classes,LIBS=['c','hash'])
@@ -29,5 +30,4 @@ if(len(test_files) > 0):
 	env.GenerateAllTests('AllTests.c',test_files)
 	alltests = env.Program(['AllTests.c'] + test_files + tested_files + cutest,LIBS=['hash'])
 	runtests = Command('test',alltests, './$SOURCE')
-	Default(runtests)
 
