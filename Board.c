@@ -93,6 +93,7 @@ void BoardPrint(Board *b) {/*{{{*/
 	Position pos;
 
 	// dprintf(stderr, "<%s>\n",output);
+	fprintf(stderr, "\n");
 	BoardHeader(b->width);
 	pos = b->players[RABBIT];
 	output[(b->width+1)*pos.y+pos.x] = 'R';

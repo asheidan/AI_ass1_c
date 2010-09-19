@@ -9,4 +9,5 @@ ACTION PlayerMinMaxNextMove(Board *b);
 
 void PlayerMinMaxSetWolfPos(Position *p);
 int PlayerMinMaxCompPos(void *a, void *b);
+
 #endif
