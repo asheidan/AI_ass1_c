@@ -83,3 +83,13 @@ void TestPos2Hash(CuTest *tc) {
 
 	CuAssertIntEquals(tc,3|7<<8|1<<16|4<<24,Pos2Hash(a,b));
 }
+
+void TestPositionTrans(CuTest *tc) {
+	Position a = {1,3};
+	Position b = {4,5};
+	Position e = {1,3};
+
+	PositionTrans((void*)&a,(void*)&b);
+	CuAssertIntEquals(tc, e.x, b.x);
+	CuAssertIntEquals(tc, e.y, b.y);
+}

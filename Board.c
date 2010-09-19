@@ -168,3 +168,8 @@ int PositionEqual(Position *a, Position *b) {
 void PositionPrint(FILE *stream, Position *p) {
 	fprintf(stream,"<%d,%d>",p->x,p->y);
 }
+
+void PositionTrans(void *from, void *to) {
+	*(Position *)to = *(Position *)from;
+}
+

@@ -84,7 +84,8 @@ int main(int argc, char *argv[]) {
 		}
 		BoardPrint(b);
 
-		if((a = PlayerHumanNextMove(b)) >= 0) {
+		a = PlayerHumanNextMove(b);
+		if(a >= 0 && a < 8) {
 			BoardMovePlayer(b,WOLF,a);
 		}
 		else {

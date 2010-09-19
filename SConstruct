@@ -16,7 +16,7 @@ if(len(irk_test_files) > 0):
 	env.GenerateAllTests(irk_test_suite,irk_test_files)
 	irk_tests = env.Program(irk_test_suite + irk_test_files + cutest,LIBS=['irk'])
 	run_irk_tests = Command('libtest',irk_tests, './$SOURCE')
-	Default(run_irk_tests)
+	# Default(run_irk_tests)
 
 classes = ['Board.c','PlayerHuman.c','PlayerMinMax.c']
 target = env.Program("main",['main.c'] + classes,LIBS=['c','irk'])
@@ -30,4 +30,5 @@ if(len(test_files) > 0):
 	env.GenerateAllTests('AllTests.c',test_files)
 	alltests = env.Program(['AllTests.c'] + test_files + tested_files + cutest,LIBS=['irk'])
 	runtests = Command('test',alltests, './$SOURCE')
+	Default(runtests)
 

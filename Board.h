@@ -34,5 +34,6 @@ Position PositionNew(Position p, ACTION a);
 uint8_t PositionDistance(Position *a, Position *b);
 int PositionEqual(Position *a, Position *b);
 void PositionPrint(FILE *stream, Position *p);
+void PositionTrans(void *from, void *to);
 
 #endif

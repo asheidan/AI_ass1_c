@@ -22,3 +22,13 @@ void PlayerMinMaxTestTearDown(Board *b) {
 	BoardFree(b);
 }
 
+void TestPositionCompare(CuTest *tc) {
+	Position a = {4,4};
+	Position b = {4,5};
+	Position wolf = {3,3};
+
+	PlayerMinMaxSetWolfPos(&wolf);
+
+	CuAssertTrue(tc,PlayerMinMaxCompPos((void*)&b,(void*)&a));
+	CuAssertTrue(tc,!PlayerMinMaxCompPos((void*)&a,(void*)&b));
+}

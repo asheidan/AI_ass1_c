@@ -12,8 +12,16 @@ uint32_t PlayerExplored = 0;
 uint32_t PlayerCaptured = 0;
 uint32_t PlayerPruned = 0;
 
-unsigned int *PlayerMinMaxHash;
-size_t PlayerMinMaxHashSize;
+Position PlayerMinMaxWolfPos;
+
+void PlayerMinMaxSetWolfPos(Position *p) {
+	PlayerMinMaxWolfPos = *p;
+}
+
+int PlayerMinMaxCompPos(void *a, void *b) {
+	return PositionDistance(&PlayerMinMaxWolfPos,a) > PositionDistance(&PlayerMinMaxWolfPos,b);
+}
+
 
 int PlayerMinMaxUtility(Board *b, Position *my_pos, Position *enemy_pos) {
 	return PositionDistance(my_pos,enemy_pos);
@@ -89,7 +97,6 @@ void PlayerMinMaxInit(Board *b) {
 }
 
 void PlayerMinMaxCleanup() {
-	free(PlayerMinMaxHash);
 }
 
 ACTION PlayerMinMaxNextMove(Board *b) {/*{{{*/
