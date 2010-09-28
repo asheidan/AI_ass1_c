@@ -19,7 +19,7 @@ if(len(irk_test_files) > 0):
 	# Default(run_irk_tests)
 
 classes = ['Board.c','PlayerHuman.c','PlayerMinMax.c']
-target = env.Program("main",['main.c'] + classes,LIBS=['c','irk'])
+target = env.Program("game",['main.c'] + classes,LIBS=['c','irk'])
 env.Command('run', target, './$SOURCE ../maps/day1.map')
 Default(target)
 
@@ -27,8 +27,10 @@ Default(target)
 test_files = Glob('*Test.c')
 if(len(test_files) > 0):
 	tested_files = [re.sub('Test.c','.o',f) for f in [str(s) for s in test_files]]
-	env.GenerateAllTests('AllTests.c',test_files)
-	alltests = env.Program(['AllTests.c'] + test_files + tested_files + cutest,LIBS=['irk'])
+	test_suite = env.GenerateAllTests('AllTests.c',test_files)
+	alltests = env.Program([test_suite] + test_files + tested_files + cutest,LIBS=['irk'])
 	runtests = Command('test',alltests, './$SOURCE')
 	#Default(runtests)
 
+Depends(target,runtests)
+# Depends(target,run_irk_tests)

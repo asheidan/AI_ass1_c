@@ -32,6 +32,7 @@ static void PlayerMinMaxIntHandler(int signal) {
 	}
 	else {
 		pthread_cancel(PlayerMinMaxWorkerThreadID);
+		PlayerMinMaxWorkerThreadID = 0;
 	}
 }
 
@@ -129,7 +130,7 @@ typedef struct {
 	ACTION *move;
 } PlayerMinMaxWorkerArgs;
 
-void *PlayerMinMaxWorker(void *args) {
+void *PlayerMinMaxWorker(void *args) {/*{{{*/
 	ACTION a, direction,*move;
 	Board *b = ((PlayerMinMaxWorkerArgs*)args)->b;
 	move = ((PlayerMinMaxWorkerArgs*)args)->move;
@@ -187,8 +188,11 @@ ACTION PlayerMinMaxNextMove(Board *b) {/*{{{*/
 
 	pthread_create(&PlayerMinMaxWorkerThreadID, NULL, PlayerMinMaxWorker,&args);
 	sleep(1);
-	pthread_cancel(PlayerMinMaxWorkerThreadID);
-	pthread_join(PlayerMinMaxWorkerThreadID,&status);
-	PlayerMinMaxWorkerThreadID = 0;
+	if(PlayerMinMaxWorkerThreadID != 0) {
+		fprintf(stderr, "Out of time...\n");
+		pthread_cancel(PlayerMinMaxWorkerThreadID);
+		pthread_join(PlayerMinMaxWorkerThreadID,&status);
+		PlayerMinMaxWorkerThreadID = 0;
+	}
 	return move;
 }
